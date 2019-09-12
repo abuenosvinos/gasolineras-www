@@ -2,7 +2,7 @@
 # Proyecto Gasolineras
 
 [![Author][Author]](http://www.antoniobuenosvinos.com)
-[![Software License][License]](LICENSE)
+[![Software License][License]](LICENSE.md)
 
 Este proyecto tiene como objetivo la práctica de diversos componentes de software como el framework Symfony o Docker.
 
