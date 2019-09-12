@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+        {% block body %}
+
+        <p><strong>Download Excel:</strong></p>
+        <div>php bin/console app:download-excel</div>
+        <div><a href="{{  path('bridge_cron_download_excel') }}" target="_blank">Ejecutar</a></div>
+
+        <p><strong>Process Excel:</strong></p>
+        <div>php bin/console app:process-excel</div>
+        <div><a href="{{  path('bridge_cron_process_excel') }}" target="_blank">Ejecutar</a></div>
+
+        <p><strong>Limpiar historial, deja los 10 últimos:</strong></p>
+        <div>php bin/console app:clean-history</div>
+        <div><a href="{{  path('bridge_cron_clean_history') }}" target="_blank">Ejecutar</a></div>
+
+        <br/>
+        <a href="{{ path('admin_file_list') }}">Listado de File</a>
+
+        {% endblock %}
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

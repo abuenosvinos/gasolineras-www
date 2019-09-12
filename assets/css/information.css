@@ -1,0 +1,41 @@
+#information div {
+    padding: 3px;
+}
+#information a {
+    text-decoration: underline;
+}
+#information .label {
+    font-weight: bold;
+}
+#information .label, #information .address, #information .schedule {
+    font-size: 1.1em;
+}
+#information .prices {
+    overflow: hidden;
+    width: 300px;
+}
+#information .prices div {
+    width: 83px;
+    padding: 5px;
+    float: left;
+    -webkit-border-radius: 8px;
+    margin: 0 6px 0 0;
+    text-align: center;
+}
+#information .prices .price {
+    position:relative;
+    display:block;
+    font-size: 1.4em;
+}
+#information .prices .gas95 {
+    background-color: #2A902A;
+    color: #fff;
+}
+#information .prices .gas98 {
+    background-color: #319278;
+    color: #fff;
+}
+#information .prices .diesel {
+    background-color: #333;
+    color: #fff;
+}

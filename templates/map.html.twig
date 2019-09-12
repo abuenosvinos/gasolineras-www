@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Gasolineras</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="application/javascript">
+        var data_lat = '{{ lat }}';
+        var data_lng = '{{ lng }}';
+        var data_url_search = '{{ path("search") }}';
+        var iAmAndroid = {% if iAmAndroid %}true{% else %}false{% endif %};
+        var iAmSecure = {% if iAmSecure %}true{% else %}false{% endif %};
+    </script>
+    {{ encore_entry_link_tags('app') }}
+    {{ encore_entry_script_tags('app') }}
+<body>
+
+<div class="content">
+    <div class="menu">
+        <div class="menu_c">
+            <div class="menu_p">
+                <div>
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="14" height="19">
+                        <path transform="scale(.039)" stroke="black" fill="green" d="M125 410 c-56 -72 -111 -176 -120 -224 -7 -36 11 -83 49 -124 76 -85 223 -67 270 31 28 60 29 88 6 150 -19 51 -122 205 -148 221 -6 3 -32 -21 -57 -54z m110 -175 c35 -34 33 -78 -4 -116 -35 -35 -71 -37 -105 -7 -40 35 -43 78 -11 116 34 41 84 44 120 7z"/>
+                    </svg>&nbsp;menor o igual&nbsp;<span class="min_low">-</span>&nbsp;€
+                </div>
+                <div>
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="14" height="19">
+                        <path transform="scale(.039)" stroke="black" fill="orange" d="M125 410 c-56 -72 -111 -176 -120 -224 -7 -36 11 -83 49 -124 76 -85 223 -67 270 31 28 60 29 88 6 150 -19 51 -122 205 -148 221 -6 3 -32 -21 -57 -54z m110 -175 c35 -34 33 -78 -4 -116 -35 -35 -71 -37 -105 -7 -40 35 -43 78 -11 116 34 41 84 44 120 7z"/>
+                    </svg>&nbsp;entre&nbsp;<span class="min_medium">-</span>&nbsp;y&nbsp;<span class="max_medium">-</span>&nbsp;€
+                </div>
+                <div>
+                    <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="14" height="19">
+                        <path transform="scale(.039)" stroke="black" fill="red" d="M125 410 c-56 -72 -111 -176 -120 -224 -7 -36 11 -83 49 -124 76 -85 223 -67 270 31 28 60 29 88 6 150 -19 51 -122 205 -148 221 -6 3 -32 -21 -57 -54z m110 -175 c35 -34 33 -78 -4 -116 -35 -35 -71 -37 -105 -7 -40 35 -43 78 -11 116 34 41 84 44 120 7z"/>
+                    </svg>&nbsp;mayor a&nbsp;<span class="min_high">-</span>&nbsp;€
+                </div>
+            </div>
+            <ul class="menu_o">
+                <li><a class="popupLink">Información</a></li>
+                <li><a href="http://www.antoniobuenosvinos.com/hablamos/" target="_blank">Contacto</a></li>
+                <li><a href="https://play.google.com/store/apps/developer?id=Antonio+Buenosvinos" target="_blank">Otras apps</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="header">
+        <div id="header_c">
+            <div id="header_f">
+                <form id="search-form" autocomplete="off">
+                    <div id="field-gas" class="select field">
+                        <span data-value="gas95">Sin Plomo 95</span>
+                        <div id="list-gas"><span data-value="gas95" class="selected">Sin Plomo 95</span><span data-value="gas98">Sin Plomo 98</span><span data-value="diesel">Diesel</span></div>
+                    </div>
+                    <div id="field-ideal" class="field">
+                        <div>
+                            <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="14" height="19">
+                                <path transform="scale(.039)" stroke="black" fill="green" d="M125 410 c-56 -72 -111 -176 -120 -224 -7 -36 11 -83 49 -124 76 -85 223 -67 270 31 28 60 29 88 6 150 -19 51 -122 205 -148 221 -6 3 -32 -21 -57 -54z m110 -175 c35 -34 33 -78 -4 -116 -35 -35 -71 -37 -105 -7 -40 35 -43 78 -11 116 34 41 84 44 120 7z"/>
+                            </svg>
+                        </div>
+                        <span alt="Más barata en menos de 30km" id="show-better">+ barata cerca</span>
+                    </div>
+                    {% if iAmAndroid or iAmSecure %}
+                    <div id="field-position" class="field">
+                        Mi posición <div id="locate" class="material-icons" title="Mi posición">my_location</div>
+                    </div>
+                    {% endif %}
+                    <div id="field-opened" class="field">
+                        <div>
+                            <label for="open">Abierto Ahora</label>
+                            <input type="checkbox" id="opened" name="opened" checked />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="map"></div>
+</div>
+
+<div id="hamburger">
+    <button class="hamburger hamburger--3dx" type="button">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+    </button>
+</div>
+
+<div class="popupInfo">
+    <span class="helper"></span>
+    <div class="data">
+        <div class="popupCloseButton">X</div>
+        <p>Esta aplicación ha sido desarrollada por <a href="http://www.antoniobuenosvinos.com/" target="_blank">Antonio Buenosvinos</a></p>
+        <p>Los datos de las estaciones de servicio así como sus precios han sido obtenidos desde el <a href="https://geoportalgasolineras.es" target="_blank">Geoportal del Ministerio para la Transición Ecológica</a>.</p>
+        <p>La última actualización de los datos corresponde a {{ last_update }}</p>
+    </div>
+</div>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key={{ key }}&callback=initMap">
+</script>
+</body>
+</html>

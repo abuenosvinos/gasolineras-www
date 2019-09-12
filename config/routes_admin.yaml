@@ -1,0 +1,16 @@
+
+home:
+    path: /
+    controller: App\Controller\AdminController::index
+
+file_list:
+    path: /file/list
+    controller: App\Controller\FileController::list
+
+file_view:
+    path: /file/view/{id}
+    controller: App\Controller\FileController::view
+
+file_delete:
+    path: /file/delete/{id}
+    controller: App\Controller\FileController::delete

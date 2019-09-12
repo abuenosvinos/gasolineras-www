@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  php-fpm:
+    build:
+      context: ./php-fpm
+    container_name: gasolina_php
+    volumes:
+      - ..:/var/www
+    links:
+      - "database:gasolineras.local"
+    depends_on:
+      - database
+    networks:
+      - gasolina_network
+
+  nginx:
+    build:
+      context: ./nginx
+    container_name: gasolina_nginx
+    volumes:
+      - ..:/var/www
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites/:/etc/nginx/sites-available
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+    ports:
+      - "8080:80"
+      - "443:443"
+    depends_on:
+      - php-fpm
+    networks:
+      - gasolina_network
+
+  database:
+    build:
+      context: ./database
+    volumes:
+      - db_gasolina:/var/lib/mysql
+      - ./database/sql:/docker-entrypoint-initdb.d
+    container_name: gasolina_database
+    #restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=gasolina
+      #- MYSQL_USER=root
+      #- MYSQL_PASSWORD=root
+    networks:
+      - gasolina_network
+
+networks:
+  gasolina_network:
+
+volumes:
+  db_gasolina: {}

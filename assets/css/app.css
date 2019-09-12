@@ -1,0 +1,19 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+label {
+    cursor:pointer;
+}
+.content {
+    height: 100%;
+}
+#map {
+    height: 100%;
+    clear: both;
+}
+.gm-style-iw, .gm-style-iw-d {
+    width: 330px !important;
+    max-width: 330px !important;
+}

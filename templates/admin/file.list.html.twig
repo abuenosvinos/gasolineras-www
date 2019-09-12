@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{{ title }}{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}
+        <p><strong>{{ title }}</strong></p>
+            <table cellpadding="3" cellspacing="1">
+                <tr>
+                    <td>Id</td>
+                    <td>Name</td>
+                    <td>Filename</td>
+                    <td>Num stations</td>
+                    <td>Options</td>
+                </tr>
+                {% for item in list %}
+                <tr>
+                    <td>{{ item.getId }}</td>
+                    <td>{{ item.getName }}</td>
+                    <td>{{ item.getCount }}</td>
+                    <td>{{ item.getFile }}</td>
+                    <td><a href="{{ path('admin_file_view',{'id':item.getId}) }}">Ver</a>{% if not item.getActive() %} - <a href="{{ path('admin_file_delete',{'id':item.getId}) }}">Borrar</a>{% endif %}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    </body>
+</html>

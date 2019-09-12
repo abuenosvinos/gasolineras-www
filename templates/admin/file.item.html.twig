@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}{{ item.getName }}{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}
+            <table cellpadding="3" cellspacing="1">
+                <tr>
+                    <td>Id</td>
+                    <td>Name</td>
+                </tr>
+                <tr>
+                    <td>{{ item.getId }}</td>
+                    <td>{{ item.getName }}</td>
+                </tr>
+            </table>
+
+            <table cellpadding="3" cellspacing="1">
+                <tr>
+                    <td>Id</td>
+                    <td>City</td>
+                    <td>Address</td>
+                    <td>Lng</td>
+                    <td>Lat</td>
+                    <td>Label</td>
+                    <td>PriceGasoline95</td>
+                    <td>PriceDieselA</td>
+                    <td>PriceGasoline98</td>
+                </tr>
+                {% for station in item.getStations %}
+                    <tr>
+                        <td>{{ station.getId }}</td>
+                        <td>{{ station.getMunicipality }}</td>
+                        <td>{{ station.getAddress }}</td>
+                        <td>{{ station.getLng }}</td>
+                        <td>{{ station.getLat }}</td>
+                        <td>{{ station.getLabel }}</td>
+                        <td>{{ station.getPriceGasoline95 }}</td>
+                        <td>{{ station.getPriceDieselA }}</td>
+                        <td>{{ station.getPriceGasoline98 }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% endblock %}
+    </body>
+</html>
