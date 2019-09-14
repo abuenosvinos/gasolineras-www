@@ -1,0 +1,19 @@
+# Exclude files from detection
+*.sql linguist-detectable=false
+
+# Source code
+*.css             text
+*.html            text diff=html
+*.js              text
+*.json            text
+*.php             text diff=php
+
+
+# Configs
+.env              text
+.gitattributes    text
+.gitconfig        text
+.htaccess         text
+package-lock.json text -diff
+*.yaml            text
+*.yml             text

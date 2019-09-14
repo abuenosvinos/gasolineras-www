@@ -6,7 +6,7 @@
 
 Este proyecto tiene como objetivo la práctica de diversos componentes de software como el framework Symfony o Docker.
 
-Sientete libre para realizar las modificaciones que consideres necesarias para tu aprendizaje.
+Siéntete libre para realizar las modificaciones que consideres necesarias para tu aprendizaje.
 
 El proyecto consiste en la obtención del listado abierto de datos de las estaciones de servicio de España, así como de los precios de los diferentes tipos de gasolina que ofrecen. Una vez obtenidos ofrecemos este listado junto a una serie de funcionalidades de búsqueda y filtrado mediante Google Maps. 
 
@@ -147,11 +147,11 @@ Contiene las reglas que el proyecto necesita para trabajar con urls bonitas en A
 
 ### Controllers de tipo Bridge
 
-La actualización de datos de las gasolineras se hace a través de Commands. Estos Commands se deben ejecutar periodicamente y la manera mas sencilla de hacerlo es usando el crontab de un sistema Linux.
+La actualización de datos de las gasolineras se hace a través de Commands. Estos Commands se deben ejecutar periódicamente y la manera más sencilla de hacerlo es usando el crontab de un sistema Linux.
 
 Pero muchos hosting no tienen esta posibilidad, por lo que para poder ejecutar los Command he creado tres Controller que una vez ejecutados, llaman a su vez a los Command.
 
-Para ejecutar estos Command deberas utilizar un servicio de tipo https://cron-job.org/ para programar la ejecución de los comandos.
+Para ejecutar estos Command deberás utilizar un servicio de tipo https://cron-job.org/ para programar la ejecución de los comandos.
 
 Adicionalmente es interesante que sepas que dado que estos procesos pueden ser costosos de ejecutar he añadido algunas líneas para aumentar memoria y timeout en estos procesos.
 
@@ -162,29 +162,29 @@ Adicionalmente es interesante que sepas que dado que estos procesos pueden ser c
 
 Personalmente he tenido problemas para descargar el Excel desde el hosting que tengo contratado. Aunque no he podido determinar el problema, el resultado es que no podía descargar el Excel, seguramente porque algún conflicto entre el ssl de la url destino y mi hosting.
 
-Si tu también tienes este problema, la solución que he aplicado es buscar otro servicio que actue de proxy y obtenga el Excel.
+Si tú también tienes este problema, la solución que he aplicado es buscar otro servicio que actúe de proxy y obtenga el Excel.
 
 ## Otras consideraciones
 
 ### Aplicación Android
 
-He creado un proyecto Android que complementa a este proyecto.
+He creado un proyecto [Android][7] que complementa a este proyecto.
 
-El proyecto Android tiene el objetivo principal de poder utilizar esta web desde una aplicación nativa.
+El proyecto Android tiene como objetivo principal poder utilizar esta web desde una aplicación nativa.
 
 Además se encarga de obtener la posición del usuario utilizando las capacidades del teléfono.
 
 ### Funcionalidad "Mi posición"
 
-La aparición del botón "Mi posición" esta condicionado a que el proyecto se ejecute sobre https o que se haya cargado a través de la aplicación Android mencionada en el punto anterior.
+La aparición del botón "Mi posición" está condicionado a que el proyecto se ejecute sobre https o que se haya cargado a través de la aplicación Android mencionada en el punto anterior.
 
-En el primer caso es necesario porque la funcionalidad de obtener la posición de un usuario en un navegador web sólo funciona sobre https.
+En el primer caso es necesario porque la funcionalidad de obtener la posición de un usuario en un navegador web solo funciona sobre https.
 
 En el segundo caso, al obtener la posición desde la aplicación Android no es necesario que la web se ejecute sobre https. 
 
 ## Posibles mejoras
 
-* Usar el componente messenger de Symfony para implantar el principo de Command/Query
+* Usar el componente messenger de Symfony para implantar el principio de Command/Query
 
 * Usar los componentes Form y Validation de Symfony para la validación de administrador
 
@@ -215,6 +215,7 @@ Espero te sea útil.
 [4]: http://www.antoniobuenosvinos.com/hablamos/
 [5]: https://symfony.com/blog/new-in-symfony-4-2-define-env-vars-per-environment
 [6]: https://developers.google.com/maps/documentation/javascript/get-api-key
+[7]: https://github.com/abuenosvinos/gasolineras-android
 
 
 [Author]: http://img.shields.io/badge/author-@abuenosvinos-blue.svg?style=flat-square
