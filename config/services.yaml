@@ -4,8 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    #download_excel_url: "https://geoportalgasolineras.es/resources/files/preciosEESS_es.xls"
-    download_excel_url: "http://www.corteganamedieval.com/components/com_content/views/section/tmpl/page-sidebar.php?q=https%%3A%%2F%%2Fgeoportalgasolineras.es%%2Fresources%%2Ffiles%%2FpreciosEESS_es.xls&hl=2c0"
+    download_excel_url: '%env(string:URL_EXTERNAL_DATA)%'
     download_save_path: '%kernel.project_dir%/var/download'
 
     google_maps_key: '%env(string:KEY_GMAPS)%'

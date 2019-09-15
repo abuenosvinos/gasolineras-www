@@ -159,6 +159,9 @@
     "symfony/cache": {
         "version": "v4.2.4"
     },
+    "symfony/cache-contracts": {
+        "version": "v1.1.5"
+    },
     "symfony/config": {
         "version": "v4.2.4"
     },
@@ -175,9 +178,6 @@
             "config/bootstrap.php"
         ]
     },
-    "symfony/contracts": {
-        "version": "v1.0.2"
-    },
     "symfony/debug": {
         "version": "v4.2.4"
     },
@@ -192,6 +192,9 @@
     },
     "symfony/event-dispatcher": {
         "version": "v4.2.4"
+    },
+    "symfony/event-dispatcher-contracts": {
+        "version": "v1.1.5"
     },
     "symfony/filesystem": {
         "version": "v4.2.4"
@@ -232,6 +235,9 @@
     },
     "symfony/http-client": {
         "version": "v4.3.0"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v1.1.6"
     },
     "symfony/http-foundation": {
         "version": "v4.2.4"
@@ -285,6 +291,9 @@
     "symfony/polyfill-php73": {
         "version": "v1.11.0"
     },
+    "symfony/process": {
+        "version": "v4.3.4"
+    },
     "symfony/profiler-pack": {
         "version": "v1.0.4"
     },
@@ -330,8 +339,14 @@
     "symfony/security-http": {
         "version": "v4.3.3"
     },
+    "symfony/service-contracts": {
+        "version": "v1.1.6"
+    },
     "symfony/stopwatch": {
         "version": "v4.2.4"
+    },
+    "symfony/translation-contracts": {
+        "version": "v1.1.6"
     },
     "symfony/twig-bridge": {
         "version": "v4.3.3"
@@ -369,6 +384,15 @@
             "config/packages/test/web_profiler.yaml",
             "config/routes/dev/web_profiler.yaml"
         ]
+    },
+    "symfony/web-server-bundle": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "dae9b39fd6717970be7601101ce5aa960bf53d9a"
+        }
     },
     "symfony/webpack-encore-bundle": {
         "version": "1.0",

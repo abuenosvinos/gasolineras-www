@@ -12,16 +12,19 @@ El proyecto consiste en la obtención del listado abierto de datos de las estaci
 
 ## Pre-requisitos
 
-Necesitas tener instalado [composer][2] en tu sistema operativo.
+[Composer][2] para descargar las dependencias de Symfony.
 
-Para la ejecución del proyecto lo puedes hacer con [docker][1] o con tu propio entorno de ejecución en local (Ej: mysql, nginx, php-fpm).
+[Node.js y Yarn][8] para poder compilar los ficheros css y js.
+
+Para la ejecución del proyecto lo puedes hacer con [docker][1], con el servidor interno de PHP gestionado mediante [Symfony][9] o con tu propio entorno de ejecución en local (Ej: mysql, nginx, php-fpm).
 
 ## Preparación
 
-Una vez hayas descargado el proyecto en tu ordenador, deberás ejecutar el siguiente comando.
+Una vez hayas descargado el proyecto en tu ordenador, deberás ejecutar los siguientes comandos.
 
 ```bash
-$ composer update
+$ composer update # Descarga las dependencias de Symfony
+$ yarn encore dev # Compila los assets (js y css) necesarios para el proyecto
 ```
 
 ## Configuración
@@ -52,7 +55,17 @@ La primera vez tarda algunos minutos por una carga inicial de datos para que el 
 
 2.- Accede a la aplicación en tu navegador en http://0.0.0.0:8080/
 
-### Software en local
+### Web Server de Symfony
+
+1.- Ejecuta el comando
+
+```bash
+$ php bin/console server:run
+```
+
+2.- Accede a la aplicación en tu navegador en http://127.0.0.1:8000
+
+### Software local
 
 1.- El primer paso será crear la base de datos
 
@@ -216,7 +229,8 @@ Espero te sea útil.
 [5]: https://symfony.com/blog/new-in-symfony-4-2-define-env-vars-per-environment
 [6]: https://developers.google.com/maps/documentation/javascript/get-api-key
 [7]: https://github.com/abuenosvinos/gasolineras-android
-
+[8]: https://symfony.com/doc/current/frontend/encore/installation.html
+[9]: https://symfony.com/doc/current/setup/built_in_web_server.html
 
 [Author]: http://img.shields.io/badge/author-@abuenosvinos-blue.svg?style=flat-square
 [License]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
