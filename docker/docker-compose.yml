@@ -7,8 +7,6 @@ services:
     container_name: gasolina_php
     volumes:
       - ..:/var/www
-    links:
-      - "database:gasolineras.local"
     depends_on:
       - database
     networks:
@@ -25,7 +23,7 @@ services:
       - ./nginx/conf.d/:/etc/nginx/conf.d
     ports:
       - "8080:80"
-      - "443:443"
+      - "8443:443"
     depends_on:
       - php-fpm
     networks:
@@ -42,10 +40,10 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=gasolina
-      #- MYSQL_USER=root
-      #- MYSQL_PASSWORD=root
     networks:
-      - gasolina_network
+      gasolina_network:
+        aliases:
+          - "gasolineras.local"
 
 networks:
   gasolina_network:
