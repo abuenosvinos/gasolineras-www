@@ -65,7 +65,6 @@ $(document).ready(function () {
     });
 });
 
-var gasSelected = 'gas95';
 var allMarkers = [];
 var ids = [];
 var map, errorWindow, infoWindow;

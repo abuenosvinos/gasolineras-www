@@ -6,6 +6,7 @@ use App\Entity\File;
 use App\Entity\Schedule;
 use App\Entity\Station;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 
 class SearchController extends AbstractController
@@ -49,11 +50,13 @@ class SearchController extends AbstractController
 
         $file = $this->getDoctrine()->getRepository(File::class)->findOneBy(['active' => 1]);
         $key = $this->getParameter('google_maps_key');
+        $gasSelected = $request->cookies->get('gasSelected', 'gas98');
 
         return $this->render('map.html.twig', [
             'key' => $key,
             'lat' => $lat,
             'lng' => $lng,
+            'gasSelected' => $gasSelected,
             'last_update' => $file->getName(),
             'iAmAndroid' => $iAmAndroid,
             'iAmSecure' => $iAmSecure
@@ -67,7 +70,10 @@ class SearchController extends AbstractController
         $radius = $request->query->get('radius', $this->getParameter('google_maps_radius'));
         $gas = $request->query->get('gas');
         $opened = $request->query->getBoolean('opened', true);
-        return $this->find($lat, $lng, $radius, $gas, $opened);
+
+        $response = $this->find($lat, $lng, $radius, $gas, $opened);
+        $response->headers->setCookie(Cookie::create('gasSelected', $gas));
+        return $response;
     }
 
     private function find($lat, $lng, $radius, $gas = null, $opened = true)

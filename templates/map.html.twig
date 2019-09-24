@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="application/javascript">
+        var gasSelected = '{{ gasSelected }}';
         var data_lat = '{{ lat }}';
         var data_lng = '{{ lng }}';
         var data_url_search = '{{ path("search") }}';
@@ -48,7 +49,7 @@
             <div id="header_f">
                 <form id="search-form" autocomplete="off">
                     <div id="field-gas" class="select field">
-                        <span data-value="gas95">Sin Plomo 95</span>
+                        <span data-value="{{ gasSelected }}">{% if gasSelected == 'gas95' %}Sin Plomo 95{% elseif gasSelected == 'gas98' %}Sin Plomo 98{% elseif gasSelected == 'diesel' %}Diesel{% endif %}</span>
                         <div id="list-gas"><span data-value="gas95" class="selected">Sin Plomo 95</span><span data-value="gas98">Sin Plomo 98</span><span data-value="diesel">Diesel</span></div>
                     </div>
                     <div id="field-ideal" class="field">
@@ -96,8 +97,7 @@
     </div>
 </div>
 
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key={{ key }}&callback=initMap">
-</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ key }}&callback=initMap"></script>
+
 </body>
 </html>
