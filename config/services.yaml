@@ -22,18 +22,40 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        exclude: ['../src/{DependencyInjection,Entity,Tests,Kernel.php}','../src/Framework/{Migrations}']
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\Controller\:
-        resource: '../src/Controller'
+    App\UI\Controller\:
+        resource: '../src/UI/Controller'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    App\Service\DeleteFileService:
+    App\Application\Service\DeleteFileService:
         arguments: ['@service_container']
         tags:
             - { name: doctrine.orm.entity_listener }
+
+    # Control específico de Handlers
+    command_handlers:
+        namespace: App\Application\Command\
+        resource: '%kernel.project_dir%/src/Application/Command/*CommandHandler.php'
+        autoconfigure: false
+        tags:
+            - { name: messenger.message_handler, bus: command.bus }
+
+    query_handlers:
+        namespace: App\Application\Query\
+        resource: '%kernel.project_dir%/src/Application/Query/*QueryHandler.php'
+        autoconfigure: false
+        tags:
+            - { name: messenger.message_handler, bus: query.bus }
+
+    event_handlers:
+        namespace: App\Application\Event\
+        resource: '%kernel.project_dir%/src/Application/Event/*EventHandler.php'
+        autoconfigure: false
+        tags:
+            - { name: messenger.message_handler, bus: event.bus }

@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use App\Entity\Schedule;
+use App\Domain\ValueObject\Schedule;
 use PHPUnit\Framework\TestCase;
 
 class ScheduleTest extends TestCase
@@ -61,6 +61,5 @@ L-S: 07:00-22:00; D: 08:00-21:00
         $this->assertTrue($schedule->isOpen('V', '23:30'));
         $this->assertTrue($schedule->isOpen('S', '04:30'));
         $this->assertTrue($schedule->isOpen('L', '00:00'));
-
     }
 }

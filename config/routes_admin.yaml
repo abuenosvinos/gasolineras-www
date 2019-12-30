@@ -1,16 +1,16 @@
 
 home:
     path: /
-    controller: App\Controller\AdminController::index
+    controller: App\UI\Controller\AdminController::index
 
 file_list:
     path: /file/list
-    controller: App\Controller\FileController::list
+    controller: App\UI\Controller\FileController::list
 
 file_view:
     path: /file/view/{id}
-    controller: App\Controller\FileController::view
+    controller: App\UI\Controller\FileController::view
 
 file_delete:
     path: /file/delete/{id}
-    controller: App\Controller\FileController::delete
+    controller: App\UI\Controller\FileController::delete

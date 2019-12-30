@@ -4,27 +4,27 @@
 
 home:
     path: /
-    controller: App\Controller\SearchController::map
+    controller: App\UI\Controller\SearchController::map
 
 map:
     path: /map
-    controller: App\Controller\SearchController::map
+    controller: App\UI\Controller\SearchController::map
 
 search:
     path: /search
-    controller: App\Controller\SearchController::search
+    controller: App\UI\Controller\SearchController::search
 
 bridge_cron_download_excel:
     path: /bridge/cron/download/excel
-    controller: App\Controller\BridgeCronDownloadExcelController::index
+    controller: App\UI\Controller\BridgeCronDownloadExcelController::index
 
 bridge_cron_process_excel:
     path: /bridge/cron/process/excel
-    controller: App\Controller\BridgeCronProcessExcelController::index
+    controller: App\UI\Controller\BridgeCronProcessExcelController::index
 
 bridge_cron_clean_history:
     path: /bridge/cron/clean/history
-    controller: App\Controller\BridgeCronCleanHistoryController::index
+    controller: App\UI\Controller\BridgeCronCleanHistoryController::index
 
 routes_admin:
     resource: routes_admin.yaml

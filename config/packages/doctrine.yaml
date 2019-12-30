@@ -22,15 +22,15 @@ doctrine:
         auto_mapping: true
         dql:
             numeric_functions:
-                acos: App\DQL\Acos
-                sin: App\DQL\Sin
-                cos: App\DQL\Cos
-                pi: App\DQL\Pi
-                radians: App\DQL\Radians
+                acos: App\Infrastructure\Doctrine\DQL\Acos
+                sin: App\Infrastructure\Doctrine\DQL\Sin
+                cos: App\Infrastructure\Doctrine\DQL\Cos
+                pi: App\Infrastructure\Doctrine\DQL\Pi
+                radians: App\Infrastructure\Doctrine\DQL\Radians
         mappings:
             App:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
+                dir: '%kernel.project_dir%/src/Domain/Entity'
+                prefix: 'App\Domain\Entity'
                 alias: App
