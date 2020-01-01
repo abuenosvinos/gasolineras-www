@@ -4,6 +4,7 @@
 namespace App\Application\Command;
 
 
+use App\Application\Event\FileWasProcessed;
 use App\Domain\Entity\File;
 use App\Domain\Entity\Station;
 use App\Infrastructure\Doctrine\Repository\FileRepository;
@@ -51,6 +52,9 @@ class ProcessFileCommandHandler implements CommandHandler
             $this->processFile($file);
             //$io->success('Execution succeed');
         }
+
+
+        $this->eventBus->notify(new FileWasProcessed(['name' => $file->getName()]));
     }
 
     private function processFile(File $file)
@@ -63,14 +67,6 @@ class ProcessFileCommandHandler implements CommandHandler
         $this->entityManager->getConnection()->getConfiguration()->setSQLLogger(null);
 
         // Borro las estaciones para empezar de nuevo
-        /*
-        $qb = $this->entityManager->createQueryBuilder();
-        $qb->delete('App\Domain\Entity\Station', 's')
-            ->where('s.file = :id')
-            ->setParameter('id', $file->getId());
-        $qb->getQuery()->execute();
-        $this->entityManager->flush();
-        */
         $this->fileRepository->deleteStationsFromFile($file);
 
         // Inserto las estaciones del Excel
@@ -102,24 +98,12 @@ class ProcessFileCommandHandler implements CommandHandler
             $station->setFile($file);
 
             $this->stationRepository->save($station);
-            /*
-            $this->entityManager->persist($station);
-            if (($i++ % 50) == 0) {
-                $this->entityManager->flush();
-            }
-            */
+
             unset($station);
             unset($item);
         }
-        //$this->entityManager->flush();
 
         // Marco los antiguos como NO válidos
-        /*
-        $qb = $this->entityManager->createQueryBuilder();
-        $qb->update('App\Domain\Entity\File', 'f')
-            ->set('f.active', 0);
-        $qb->getQuery()->execute();
-        */
         $this->fileRepository->inactiveAllFiles();
 
         // Marco el nuevo como válido
