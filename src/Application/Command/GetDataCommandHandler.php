@@ -8,7 +8,6 @@ use App\Application\Event\FileWasDownloaded;
 use App\Infrastructure\Doctrine\Repository\FileRepository;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 use App\Shared\Domain\Bus\Event\EventBus;
-use Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
