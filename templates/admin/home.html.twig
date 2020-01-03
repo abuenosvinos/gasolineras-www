@@ -7,6 +7,8 @@
     </head>
         {% block body %}
 
+            <a href="{{  path('app_logout') }}">Logout</a>
+
         <p><strong>Download Excel:</strong></p>
         <div>php bin/console app:download-excel</div>
         <div><a href="{{  path('bridge_cron_download_excel') }}" target="_blank">Ejecutar</a></div>

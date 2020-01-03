@@ -14,3 +14,4 @@ file_view:
 file_delete:
     path: /file/delete/{id}
     controller: App\UI\Controller\FileController::delete
+

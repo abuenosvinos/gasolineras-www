@@ -10,7 +10,7 @@ use App\Domain\Entity\Station;
 use App\Infrastructure\Doctrine\Repository\FileRepository;
 use App\Infrastructure\Doctrine\Repository\StationRepository;
 use App\Shared\Domain\Bus\Command\CommandHandler;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Shared\Domain\Bus\Event\EventBus;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -18,15 +18,14 @@ class ProcessFileCommandHandler implements CommandHandler
 {
     private $fileRepository;
     private $stationRepository;
-    private $entityManager;
-    private $params;
+    private $eventBus;
 
-    public function __construct(FileRepository $fileRepository, StationRepository $stationRepository, EntityManagerInterface $entityManager, ParameterBagInterface $params)
+    public function __construct(FileRepository $fileRepository, StationRepository $stationRepository, ParameterBagInterface $params, EventBus $eventBus)
     {
         $this->fileRepository = $fileRepository;
         $this->stationRepository = $stationRepository;
-        $this->entityManager = $entityManager;
         $this->params = $params;
+        $this->eventBus = $eventBus;
     }
 
     public function __invoke(ProcessFileCommand $command)
@@ -63,8 +62,6 @@ class ProcessFileCommandHandler implements CommandHandler
         $pathFile = $this->params->get('download_save_path') . '/' . $nameFile;
         $spreadsheet = IOFactory::load($pathFile);
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
-
-        $this->entityManager->getConnection()->getConfiguration()->setSQLLogger(null);
 
         // Borro las estaciones para empezar de nuevo
         $this->fileRepository->deleteStationsFromFile($file);
