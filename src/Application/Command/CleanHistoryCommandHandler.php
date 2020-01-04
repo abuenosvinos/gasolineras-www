@@ -18,13 +18,6 @@ class CleanHistoryCommandHandler implements CommandHandler
 
     public function __invoke(CleanHistoryCommand $command)
     {
-        /*
-        $files = $this->entityManager->getRepository(File::class)->findBy([], ['id' => 'desc'], 3, 10);
-        foreach ($files as $file) {
-            $this->entityManager->remove($file);
-        }
-        */
-
         $files = $this->repository->getLastFiles();
         foreach ($files as $file) {
             $this->repository->remove($file);
