@@ -6,12 +6,12 @@ use App\Domain\Entity\User;
 use App\Infrastructure\Doctrine\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
 
@@ -104,7 +104,8 @@ class AddUserCommand extends Command
         $plainPassword = $input->getArgument('password');
         $isAdmin = $input->getOption('is-admin');
 
-        $this->validateEmail($email);
+        $email = new Address($email);
+        $email = $email->getEncodedAddress();
 
         $user = $this->userRepository->findOneByEmail($email);
         if (!empty($user)) {
@@ -141,16 +142,6 @@ The <info>%command.name%</info> command creates new users and saves them in the 
     add the <comment>--is-admin</comment> option:
   <info>php %command.full_name%</info> email password <comment>--is-admin</comment>
 HELP;
-    }
-
-    private function validateEmail(?string $email)
-    {
-        if (empty($email)) {
-            throw new InvalidArgumentException('The email can not be empty.');
-        }
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw new InvalidArgumentException('The email should look like a real email.');
-        }
     }
 
 }
