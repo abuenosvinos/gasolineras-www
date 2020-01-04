@@ -1,0 +1,15 @@
+{% extends "security/base.html.twig" %}
+
+{% block title %}Register{% endblock %}
+
+{% block init %}
+    <style>
+        #logreg-forms .form-signup {
+            display: block;
+        }
+        #logreg-forms .form-reset, #logreg-forms .form-signin {
+            display: none;
+        }
+    </style>
+{% endblock %}
+

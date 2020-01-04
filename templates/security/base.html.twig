@@ -1,13 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+
+        <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <link rel="stylesheet" href="/login_artin/login.css">
     </head>
+    <body>
         {% block body %}
+            <div id="logreg-forms">
+                <form action="{{ path('app_login_action') }}" class="form-signin" method="post">
+                    <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
+
+                    {#
+                    <div class="social-login">
+                        <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span> </button>
+                        <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign in with Google+</span> </button>
+                    </div>
+                    <p style="text-align:center"> OR  </p>
+                    #}
+
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" placeholder="Email address" class="form-control" required autofocus>
+                    <input type="password" name="password" id="inputPassword" class="form-control mb-3" placeholder="Password" required>
+                    <div class="mb-3 custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="rememberCheck" name="_remember_me">
+                        <label class="custom-control-label" for="rememberCheck">Remember me</label>
+                    </div>
+
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+                    <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Sign in</button>
+
+                    {#
+                    <a href="#" id="forgot_pswd">Forgot password?</a>
+                    #}
+
+                    <hr>
+                    <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> Sign up New Account</button>
+                </form>
+
+                {#
+                <form action="/reset/password/" class="form-reset">
+                    <input type="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                    <button class="btn btn-primary btn-block" type="submit">Reset Password</button>
+                    <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Back</a>
+                </form>
+                #}
+
+                {{ form_start(registrationForm, {'action': path('app_register_action'), 'method': 'POST', 'attr': {'class':'form-signup'}}) }}
+
+                {#
+                <div class="social-login">
+                    <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign up with Facebook</span> </button>
+                </div>
+                <div class="social-login">
+                    <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> Sign up with Google+</span> </button>
+                </div>
+
+                <p style="text-align:center">OR</p>
+                #}
+
+                {{ form_widget(registrationForm.fullName, {'attr': {'class':'form-control','placeholder':'Full name'}}) }}
+                {{ form_widget(registrationForm.email, {'attr': {'class':'form-control','placeholder':'Email address'}}) }}
+                {{ form_widget(registrationForm.plainPassword, {'attr': {'class':'mb-3 form-control','placeholder':'Password'}}) }}
+                <div class="mb-3 custom-control custom-checkbox">
+                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class':'custom-control-input'}}) }}
+                    <label class="custom-control-label" for="registration_form_agreeTerms">Agree terms</label>
+                </div>
+
+                {% if not registrationForm.vars.valid %}
+                    {% for child in registrationForm.children %}
+                        {%for error in child.vars.errors%}
+                            <div class="alert alert-danger">{{error.message}}</div>
+                        {%endfor%}
+                    {%endfor%}
+                {% endif %}
+
+                <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-user-plus"></i> Sign Up</button>
+                <a href="#" id="cancel_signup"><i class="fas fa-angle-left"></i> Back</a>
+
+                {{ form_end(registrationForm) }}
+                <br>
+            </div>
         {% endblock %}
 
-        {% block javascripts %}{% endblock %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <script src="/login_artin/login.js"></script>
+
+        {% block init %}
+        {% endblock %}
     </body>
 </html>
