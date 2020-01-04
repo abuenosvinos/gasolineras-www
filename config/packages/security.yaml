@@ -26,7 +26,7 @@ security:
             provider: app_user_provider
             guard:
                 authenticators:
-                    - App\Security\LoginFormAuthenticator
+                    - App\Framework\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
         alternative:
