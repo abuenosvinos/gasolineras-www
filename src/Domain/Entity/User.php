@@ -4,6 +4,7 @@ namespace App\Domain\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Infrastructure\Doctrine\Repository\UserRepository")
@@ -21,6 +22,14 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank()
+     */
+    private $fullName;
 
     /**
      * @ORM\Column(type="json")
@@ -48,6 +57,16 @@ class User implements UserInterface
         $this->email = $email;
 
         return $this;
+    }
+
+    public function setFullName(string $fullName): void
+    {
+        $this->fullName = $fullName;
+    }
+
+    public function getFullName(): ?string
+    {
+        return $this->fullName;
     }
 
     /**

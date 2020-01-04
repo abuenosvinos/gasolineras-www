@@ -44,6 +44,7 @@ class AddUserCommand extends Command
             ->setHelp($this->getCommandHelp())
             ->addArgument('email', InputArgument::OPTIONAL, 'The email of the new user')
             ->addArgument('password', InputArgument::OPTIONAL, 'The plain password of the new user')
+            ->addArgument('full-name', InputArgument::OPTIONAL, 'The full name of the new user')
             ->addOption('is-admin', null, InputOption::VALUE_NONE, 'If set, the user is created as an administrator')
         ;
     }
@@ -62,7 +63,7 @@ class AddUserCommand extends Command
 
     protected function interact(InputInterface $input, OutputInterface $output)
     {
-        if (null !== $input->getArgument('email') && null !== $input->getArgument('password')) {
+        if (null !== $input->getArgument('email') && null !== $input->getArgument('password') && null !== $input->getArgument('full-name')) {
             return;
         }
 
@@ -71,7 +72,7 @@ class AddUserCommand extends Command
             'If you prefer to not use this interactive wizard, provide the',
             'arguments required by this command as follows:',
             '',
-            ' $ php bin/console app:add-user email password',
+            ' $ php bin/console app:add-user email password full-name',
             '',
             'Now we\'ll ask you for the value of all the missing command arguments.',
         ]);
@@ -88,10 +89,19 @@ class AddUserCommand extends Command
         // Ask for the password if it's not defined
         $password = $input->getArgument('password');
         if (null !== $password) {
-            $this->io->text(' > <info>Password</info>: '.u('*')->repeat(u($password)->length()));
+            $this->io->text(' > <info>Password</info>: '.$password);
         } else {
             $password = $this->io->askHidden('Password (your type will be hidden)');
             $input->setArgument('password', $password);
+        }
+
+        // Ask for the full name if it's not defined
+        $fullName = $input->getArgument('full-name');
+        if (null !== $fullName) {
+            $this->io->text(' > <info>Full Name</info>: '.$fullName);
+        } else {
+            $fullName = $this->io->ask('Full Name', null);
+            $input->setArgument('full-name', $fullName);
         }
     }
 
@@ -102,6 +112,7 @@ class AddUserCommand extends Command
 
         $email = $input->getArgument('email');
         $plainPassword = $input->getArgument('password');
+        $fullName = $input->getArgument('full-name');
         $isAdmin = $input->getOption('is-admin');
 
         $email = new Address($email);
@@ -115,6 +126,7 @@ class AddUserCommand extends Command
 
         $user = new User();
         $user->setEmail($email);
+        $user->setFullName($fullName);
         $user->setRoles(array($isAdmin ? 'ROLE_ADMIN' : 'ROLE_USER'));
 
         $encodedPassword = $this->passwordEncoder->encodePassword($user, $plainPassword);
@@ -137,10 +149,10 @@ class AddUserCommand extends Command
     {
         return <<<'HELP'
 The <info>%command.name%</info> command creates new users and saves them in the database:
-  <info>php %command.full_name%</info> <comment>email password</comment>
+  <info>php %command.full_name%</info> <comment>email password full_name</comment>
     By default the command creates regular users. To create administrator users,
     add the <comment>--is-admin</comment> option:
-  <info>php %command.full_name%</info> email password <comment>--is-admin</comment>
+  <info>php %command.full_name%</info> email password full_name<comment>--is-admin</comment>
 HELP;
     }
 
