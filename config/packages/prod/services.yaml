@@ -1,8 +1,8 @@
 
-// Otros sitios donde encontrar los datos o hacen referencia a ellos
-// https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/
-// https://opendata.esri.es/datasets/gasolineras-de-espa%C3%B1a
-// https://datos.gob.es/es/catalogo/e04990201-precio-de-carburantes-en-las-gasolineras-espanolas
+# Otros sitios donde encontrar los datos o hacen referencia a ellos
+# https://sedeaplicaciones.minetur.gob.es/ServiciosRESTCarburantes/PreciosCarburantes/EstacionesTerrestres/
+# https://opendata.esri.es/datasets/gasolineras-de-espa%C3%B1a
+# https://datos.gob.es/es/catalogo/e04990201-precio-de-carburantes-en-las-gasolineras-espanolas
 
 parameters:
   download_excel_url: "http://www.corteganamedieval.com/components/com_content/views/section/tmpl/page-sidebar.php?q=https%%3A%%2F%%2Fgeoportalgasolineras.es%%2Fresources%%2Ffiles%%2FpreciosEESS_es.xls&hl=2c0"
