@@ -1,7 +1,7 @@
 
 home:
     path: /
-    controller: App\UI\Controller\AdminController::index
+    controller: App\UI\Controller\Admin\AdminController::index
 
 file_list:
     path: /file/list

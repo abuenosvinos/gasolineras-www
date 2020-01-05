@@ -152,7 +152,7 @@ The <info>%command.name%</info> command creates new users and saves them in the 
   <info>php %command.full_name%</info> <comment>email password full_name</comment>
     By default the command creates regular users. To create administrator users,
     add the <comment>--is-admin</comment> option:
-  <info>php %command.full_name%</info> email password full_name<comment>--is-admin</comment>
+  <info>php %command.full_name%</info> email password full_name <comment>--is-admin</comment>
 HELP;
     }
 

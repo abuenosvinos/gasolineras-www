@@ -21,7 +21,6 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            #pattern: ^/admin/*
             anonymous: true
             provider: app_user_provider
             guard:
@@ -30,8 +29,7 @@ security:
             logout:
                 path: app_logout
         alternative:
-            pattern: ^/back/*
-            #anonymous: true
+            anonymous: true
             provider: admin_users
             http_basic:
                 realm: Secured Area
