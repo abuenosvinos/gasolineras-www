@@ -39,6 +39,10 @@ El fichero .env necesita obligatoriamente que declares estos parámetros:
 
 4.- URL_EXTERNAL_DATA. Es la url de donde obtendremos la información de las estaciones de servicio. Este parámetro si que tiene un valor por defecto.
 
+5.- MESSENGER_TRANSPORT_DSN. La cadena donde se almacenarán los mensajes del Bus que establezcas como asincronos.
+
+6.- MAILER_DSN. La cadena de conexión para el servicio de envío de mails.
+
 La [recomendación de Symfony][5] es que crees un fichero .env.local con estos datos 
 
 ## Ejecución
@@ -195,15 +199,60 @@ En el primer caso es necesario porque la funcionalidad de obtener la posición d
 
 En el segundo caso, al obtener la posición desde la aplicación Android no es necesario que la web se ejecute sobre https. 
 
-## Posibles mejoras
+La aparición del botón "Mi posición" está condicionado a que el proyecto se ejecute sobre https o que se haya cargado a través de la aplicación Android mencionada en el punto anterior.
 
-* Usar el componente messenger de Symfony para implantar el principio de Command/Query
+## Uso de librerias
+
+Como el objetivo de este proyecto es la práctica a continuación indico algunas librerías que se han utilizado para enriquecer la aplicación.
+
+### Uso de Bus para Command, Query y Event
+
+Utilizando el componente symfony/messenger se ha establecido un Bus para la implementación de parte del patrón CQRS
+
+La parte interesante con la que puedes trabajar es con la gestión de estos paquetes de manera asincrona.
+
+A continuación te dejo un trozo de código que puedes encontrar en config/packages/dev/messenger.yaml que te permitiría que el comando App\Application\Command\GetDataCommand se ejecutara de manera asincrona.
+
+    framework:
+        messenger:
+            routing:
+                # Route your messages to the transports
+                #'App\Application\Command\GetDataCommand': async
+
+Puedes encontrar toda la información en la [página oficial][10] del componente
+
+### Uso de Mailer
+
+Para el envío de mails se ha utilizado el componente symfony/mailer.
+
+Este componente se usa para notificar los eventos de descarga y procesamiento del Excel. Así podemos estar informados que los procesos clave de este proyecto se están ejecutando correctamente.
+
+### Gestión de usuarios
+
+La primera versión utilizaba la validación http_basic y aún queda el código en el fichero secutiry.yaml y las variables ADMIN_USER y ADMIN_PASS contienen las credenciales para esta validación.
+
+        alternative:
+            anonymous: true
+            provider: admin_users
+            http_basic:
+                realm: Secured Area
+
+Pero actualmente estamos utilizando el componente symfony/security y otros componentes de form y validation para la gestión de usuarios.
+
+Para la creación de usuarios tienes dos métodos:
+
+- Por comando: `bin/console app:add-user --help`
+- Por url `/register`
+
+El primer caso te permite crear de manera opcional usuarios administrador, el segundo solo usuarios regulares.
+
+Para el login puedes usar la url `/login`
+
+## Posibles mejoras
 
 * Usar los componentes Form y Validation de Symfony para la validación de administrador
 
 * Mejorar visualmente la parte de administración
-
-* Usar el componente de Mailer de Symfony para notificar de eventos, como por ejemplo si no se ha podido descargar el Excel de datos
 
 * Integrar las analíticas de Firebase al proyecto
 
@@ -214,6 +263,12 @@ En el segundo caso, al obtener la posición desde la aplicación Android no es n
 * Crear algún tipo de proyecto relativo a los cambios de precios de las estaciones de gasolina, por ejemplo, el precio medio por provincias
 
 * Usar Open Street Maps e implantar un sistema para poder usar cualquier de los sistemas de mapas implantados
+
+* En cuanto a la gestión de usuarios queda pendiente:
+    - Login y registro de usuarios mediante Facebook
+    - Login y registro de usuarios mediante Google
+    - Reset de contraseña
+    - Hacer que el login te lleve a la página que estabas antes de pedirte el login
 
 ## Contacto
 
@@ -231,6 +286,7 @@ Espero te sea útil.
 [7]: https://github.com/abuenosvinos/gasolineras-android
 [8]: https://symfony.com/doc/current/frontend/encore/installation.html
 [9]: https://symfony.com/doc/current/setup/built_in_web_server.html
+[10]: https://symfony.com/doc/current/messenger.html
 
 [Author]: http://img.shields.io/badge/author-@abuenosvinos-blue.svg?style=flat-square
 [License]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
