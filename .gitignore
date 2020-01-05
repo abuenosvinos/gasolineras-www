@@ -6,6 +6,9 @@ NOTAS.txt
 # phpstorm
 .idea/
 
+# others
+/src/Framework/Migrations
+
 
 ###> symfony/framework-bundle ###
 /.env.local
