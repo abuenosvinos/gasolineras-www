@@ -2,6 +2,8 @@
 
 namespace App\Domain\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -78,6 +80,11 @@ class Station
     private $file;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Domain\Entity\Price", mappedBy="station", orphanRemoval=true, cascade={"remove"})
+     */
+    private $prices;
+
+    /**
      * @ORM\Column(type="float", nullable=true)
      */
     private $price_gasoline_95;
@@ -95,17 +102,7 @@ class Station
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $price_bioethanol;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
     private $price_new_diesel_a;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $price_biodiesel;
 
     /**
      * @ORM\Column(type="float", nullable=true)
@@ -115,17 +112,12 @@ class Station
     /**
      * @ORM\Column(type="float", nullable=true)
      */
-    private $price_compressed_natural_gas;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $price_liquefied_natural_gas;
-
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
     private $price_liquefied_petroleum_gas;
+
+    public function __construct()
+    {
+        $this->prices = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -264,18 +256,6 @@ class Station
         return $this;
     }
 
-    public function getFile(): ?File
-    {
-        return $this->file;
-    }
-
-    public function setFile(?File $file): self
-    {
-        $this->file = $file;
-
-        return $this;
-    }
-
     public function getPriceGasoline95(): ?float
     {
         return $this->price_gasoline_95;
@@ -312,18 +292,6 @@ class Station
         return $this;
     }
 
-    public function getPriceBioethanol(): ?float
-    {
-        return $this->price_bioethanol;
-    }
-
-    public function setPriceBioethanol(?float $price_bioethanol): self
-    {
-        $this->price_bioethanol = $price_bioethanol;
-
-        return $this;
-    }
-
     public function getPriceNewDieselA(): ?float
     {
         return $this->price_new_diesel_a;
@@ -332,18 +300,6 @@ class Station
     public function setPriceNewDieselA(?float $price_new_diesel_a): self
     {
         $this->price_new_diesel_a = $price_new_diesel_a;
-
-        return $this;
-    }
-
-    public function getPriceBiodiesel(): ?float
-    {
-        return $this->price_biodiesel;
-    }
-
-    public function setPriceBiodiesel(?float $price_biodiesel): self
-    {
-        $this->price_biodiesel = $price_biodiesel;
 
         return $this;
     }
@@ -360,30 +316,6 @@ class Station
         return $this;
     }
 
-    public function getPriceCompressedNaturalGas(): ?float
-    {
-        return $this->price_compressed_natural_gas;
-    }
-
-    public function setPriceCompressedNaturalGas(?float $price_compressed_natural_gas): self
-    {
-        $this->price_compressed_natural_gas = $price_compressed_natural_gas;
-
-        return $this;
-    }
-
-    public function getPriceLiquefiedNaturalGas(): ?float
-    {
-        return $this->price_liquefied_natural_gas;
-    }
-
-    public function setPriceLiquefiedNaturalGas(?float $price_liquefied_natural_gas): self
-    {
-        $this->price_liquefied_natural_gas = $price_liquefied_natural_gas;
-
-        return $this;
-    }
-
     public function getPriceLiquefiedPetroleumGas(): ?float
     {
         return $this->price_liquefied_petroleum_gas;
@@ -392,6 +324,49 @@ class Station
     public function setPriceLiquefiedPetroleumGas(?float $price_liquefied_petroleum_gas): self
     {
         $this->price_liquefied_petroleum_gas = $price_liquefied_petroleum_gas;
+
+        return $this;
+    }
+
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    public function setFile(?File $file): self
+    {
+        $this->file = $file;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Price[]
+     */
+    public function getPrices(): Collection
+    {
+        return $this->prices;
+    }
+
+    public function addPrice(Price $price): self
+    {
+        if (!$this->prices->contains($price)) {
+            $this->prices[] = $price;
+            $price->setStation($this);
+        }
+
+        return $this;
+    }
+
+    public function removePrice(Price $price): self
+    {
+        if ($this->prices->contains($price)) {
+            $this->prices->removeElement($price);
+            // set the owning side to null (unless already changed)
+            if ($price->getStation() === $this) {
+                $price->setStation(null);
+            }
+        }
 
         return $this;
     }

@@ -22,7 +22,7 @@ class StationRepository extends ServiceEntityRepository
     /**
      * @return Station[] Returns an array of Station objects
      */
-    public function findByLatLng($lat, $lng, $radius, $gas = null)
+    public function search($lat, $lng, $radius, $gas = null)
     {
         // Información obtenida de:
         // https://intelligentbee.com/2017/09/14/get-nearby-locations-mysql-database/
@@ -58,6 +58,18 @@ class StationRepository extends ServiceEntityRepository
         }
 
         return $q->getQuery()->getResult();
+    }
+
+    public function findByLatLng($lat, $lng): ?Station
+    {
+        $q = $this->createQueryBuilder('s')
+            ->andWhere('s.lat = :lat')
+            ->andWhere('s.lng = :lng')
+            ->setParameter('lat', $lat)
+            ->setParameter('lng', $lng)
+        ;
+
+        return $q->getQuery()->getOneOrNullResult();
     }
 
     public function save(Station $station)

@@ -34,7 +34,7 @@ class File
     private $file;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Domain\Entity\Station", mappedBy="file", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Domain\Entity\Station", mappedBy="file", orphanRemoval=true, cascade={"remove"})
      */
     private $stations;
 

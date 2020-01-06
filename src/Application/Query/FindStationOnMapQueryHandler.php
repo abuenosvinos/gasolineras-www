@@ -19,7 +19,7 @@ class FindStationOnMapQueryHandler extends Query
 
     public function __invoke(FindStationOnMapQuery $query)
     {
-        $list = $this->repository->findByLatLng($query->lat(), $query->lng(), $query->radius(), $query->gas());
+        $list = $this->repository->search($query->lat(), $query->lng(), $query->radius(), $query->gas());
         $opened = $query->opened();
 
         $tmp = ['gas95' => [], 'gas98' => [], 'diesel' => []];

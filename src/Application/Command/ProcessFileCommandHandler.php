@@ -6,8 +6,10 @@ namespace App\Application\Command;
 
 use App\Application\Event\FileWasProcessed;
 use App\Domain\Entity\File;
+use App\Domain\Entity\Price;
 use App\Domain\Entity\Station;
 use App\Infrastructure\Doctrine\Repository\FileRepository;
+use App\Infrastructure\Doctrine\Repository\PriceRepository;
 use App\Infrastructure\Doctrine\Repository\StationRepository;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 use App\Shared\Domain\Bus\Event\EventBus;
@@ -18,12 +20,14 @@ class ProcessFileCommandHandler implements CommandHandler
 {
     private $fileRepository;
     private $stationRepository;
+    private $priceRepository;
     private $eventBus;
 
-    public function __construct(FileRepository $fileRepository, StationRepository $stationRepository, ParameterBagInterface $params, EventBus $eventBus)
+    public function __construct(FileRepository $fileRepository, StationRepository $stationRepository, PriceRepository $priceRepository, ParameterBagInterface $params, EventBus $eventBus)
     {
         $this->fileRepository = $fileRepository;
         $this->stationRepository = $stationRepository;
+        $this->priceRepository = $priceRepository;
         $this->params = $params;
         $this->eventBus = $eventBus;
     }
@@ -52,7 +56,6 @@ class ProcessFileCommandHandler implements CommandHandler
             //$io->success('Execution succeed');
         }
 
-
         $this->eventBus->notify(new FileWasProcessed(['name' => $file->getName()]));
     }
 
@@ -64,13 +67,26 @@ class ProcessFileCommandHandler implements CommandHandler
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
 
         // Borro las estaciones para empezar de nuevo
-        $this->fileRepository->deleteStationsFromFile($file);
+        //$this->fileRepository->deleteStationsFromFile($file);
 
         // Inserto las estaciones del Excel
-        $i = 0;
         $sheetData = array_splice($sheetData, 4);
         foreach ($sheetData as $item) {
-            $station = new Station();
+
+            $price = new Price();
+            $price->setPriceGasoline95($this->formatFloat($item['I']));
+            $price->setPriceDieselA($this->formatFloat($item['J']));
+            $price->setPriceDieselB($this->formatFloat($item['K']));
+            $price->setPriceNewDieselA($this->formatFloat($item['M']));
+            $price->setPriceGasoline98($this->formatFloat($item['Q']));
+            $price->setPriceLiquefiedPetroleumGas($this->formatFloat($item['T']));
+            $this->priceRepository->save($price);
+
+            $station = $this->stationRepository->findByLatLng($this->formatFloat($item['H']), $this->formatFloat($item['G']));
+            if (!$station) {
+                $station = new Station();
+            }
+
             $station->setProvince($item['A']);
             $station->setMunicipality($item['B']);
             $station->setLocation($item['C']);
@@ -78,24 +94,21 @@ class ProcessFileCommandHandler implements CommandHandler
             $station->setAddress($item['E']);
             $station->setLng($this->formatFloat($item['G']));
             $station->setLat($this->formatFloat($item['H']));
-            $station->setPriceGasoline95($this->formatFloat($item['I']));
-            $station->setPriceDieselA($this->formatFloat($item['J']));
-            $station->setPriceDieselB($this->formatFloat($item['K']));
-            //$station->setPriceBioethanol($this->formatFloat($item['L']));
-            //$station->setPriceNewDieselA($this->formatFloat($item['M']));
-            //$station->setPriceBiodiesel($this->formatFloat($item['N']));
-            $station->setPriceGasoline98($this->formatFloat($item['Q']));
-            //$station->setPriceCompressedNaturalGas($this->formatFloat($item['R']));
-            //$station->setPriceLiquefiedNaturalGas($this->formatFloat($item['S']));
-            //$station->setPriceLiquefiedPetroleumGas($this->formatFloat($item['T']));
             $station->setLabel($item['U']);
             $station->setSaleType($item['V']);
             $station->setRem($item['W']);
             $station->setSchedule($item['X']);
+            $station->setPriceGasoline95($this->formatFloat($item['I']));
+            $station->setPriceDieselA($this->formatFloat($item['J']));
+            $station->setPriceDieselB($this->formatFloat($item['K']));
+            $station->setPriceNewDieselA($this->formatFloat($item['M']));
+            $station->setPriceGasoline98($this->formatFloat($item['Q']));
+            $station->setPriceLiquefiedPetroleumGas($this->formatFloat($item['T']));
             $station->setFile($file);
-
+            $station->addPrice($price);
             $this->stationRepository->save($station);
 
+            unset($price);
             unset($station);
             unset($item);
         }

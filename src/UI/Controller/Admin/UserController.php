@@ -1,13 +1,13 @@
 <?php
 
-namespace App\UI\Controller;
+namespace App\UI\Controller\Admin;
 
 use App\Application\Command\DeleteFileCommand;
 use App\Application\Query\FindFileByIdQuery;
 use App\Application\Query\FindAllStationQuery;
 use App\Framework\Controller\BaseController;
 
-class FileController extends BaseController
+class UserController extends BaseController
 {
     public function list()
     {

@@ -3,15 +3,27 @@ home:
     path: /
     controller: App\UI\Controller\Admin\AdminController::index
 
+bridge:
+    path: /bridge
+    controller: App\UI\Controller\Admin\AdminController::bridge
+
 file_list:
     path: /file/list
-    controller: App\UI\Controller\FileController::list
+    controller: App\UI\Controller\Admin\FileController::list
 
 file_view:
     path: /file/view/{id}
-    controller: App\UI\Controller\FileController::view
+    controller: App\UI\Controller\Admin\FileController::view
 
 file_delete:
     path: /file/delete/{id}
-    controller: App\UI\Controller\FileController::delete
+    controller: App\UI\Controller\Admin\FileController::delete
+
+user_list:
+    path: /user/list
+    controller: App\UI\Controller\Admin\UserController::list
+
+user_view:
+    path: /user/view/{id}
+    controller: App\UI\Controller\Admin\UserController::view
 
