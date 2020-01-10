@@ -65,13 +65,21 @@ class ProcessFileCommandHandler implements CommandHandler
         $pathFile = $this->params->get('download_save_path') . '/' . $nameFile;
         $spreadsheet = IOFactory::load($pathFile);
         $sheetData = $spreadsheet->getActiveSheet()->toArray(null, true, true, true);
+        $numHeaderSheet = 4;
+        $totalSheets = count($sheetData) - $numHeaderSheet;
 
         // Borro las estaciones para empezar de nuevo
         //$this->fileRepository->deleteStationsFromFile($file);
 
         // Inserto las estaciones del Excel
-        $sheetData = array_splice($sheetData, 4);
+        $num_processed = $file->getNumProcessed();
+        $offset = $numHeaderSheet + $num_processed;
+        $limit = 2500;
+
+        $sheetData = array_splice($sheetData, $offset, $limit);
         foreach ($sheetData as $item) {
+
+            $num_processed++;
 
             $price = new Price();
             $price->setPriceGasoline95($this->formatFloat($item['I']));
@@ -80,6 +88,11 @@ class ProcessFileCommandHandler implements CommandHandler
             $price->setPriceNewDieselA($this->formatFloat($item['M']));
             $price->setPriceGasoline98($this->formatFloat($item['Q']));
             $price->setPriceLiquefiedPetroleumGas($this->formatFloat($item['T']));
+
+            if (!$this->isValidPrice($price)) {
+                continue;
+            }
+
             $this->priceRepository->save($price);
 
             $station = $this->stationRepository->findByLatLng($this->formatFloat($item['H']), $this->formatFloat($item['G']));
@@ -116,10 +129,24 @@ class ProcessFileCommandHandler implements CommandHandler
         // Marco los antiguos como NO válidos
         $this->fileRepository->inactiveAllFiles();
 
-        // Marco el nuevo como válido
-        $file->setActive(true);
+        $file->setNumProcessed($num_processed);
+        if ($num_processed >= $totalSheets) {
+            // Marco el nuevo como válido
+            $file->setActive(true);
+        }
 
         $this->fileRepository->save($file);
+    }
+
+    private function isValidPrice(Price $price) {
+        return (
+            $price->getPriceGasoline95() > 0 ||
+            $price->getPriceDieselA() > 0 ||
+            $price->getPriceDieselB() > 0 ||
+            $price->getPriceNewDieselA() > 0 ||
+            $price->getPriceGasoline98() > 0 ||
+            $price->getPriceLiquefiedPetroleumGas() > 0
+        );
     }
 
     private function formatFloat($value) {

@@ -43,7 +43,10 @@ class File
      */
     private $active;
 
-    private $count;
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $num_processed = 0;
 
     public function __construct()
     {
@@ -91,14 +94,14 @@ class File
         return $this;
     }
 
-    public function getCount(): ?int
+    public function getNumProcessed(): ?int
     {
-        return $this->count;
+        return $this->num_processed;
     }
 
-    public function setCount(int $count): self
+    public function setNumProcessed(int $num_processed): self
     {
-        $this->count = $count;
+        $this->num_processed = $num_processed;
 
         return $this;
     }

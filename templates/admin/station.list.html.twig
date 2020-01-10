@@ -1,0 +1,74 @@
+{% extends'admin/base.html.twig' %}
+
+{% block title_section %}List of stations{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-12">
+
+            {% if paginator.count > 0 %}
+            <div class="card">
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-bordered table-hover dataTable">
+                        <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th class="sorting">City</th>
+                            <th>Address</th>
+                            <th>Lng</th>
+                            <th>Lat</th>
+                            <th>Label</th>
+                            <th>PriceGasoline95</th>
+                            <th>PriceDieselA</th>
+                            <th>PriceGasoline98</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Options</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for station in paginator.getIterator %}
+                            <tr>
+                                <td>{{ station.getId }}</td>
+                                <td>{{ station.getMunicipality }}</td>
+                                <td>{{ station.getAddress }}</td>
+                                <td>{{ station.getLng }}</td>
+                                <td>{{ station.getLat }}</td>
+                                <td>{{ station.getLabel }}</td>
+                                <td>{{ station.getPriceGasoline95 }}</td>
+                                <td>{{ station.getPriceDieselA }}</td>
+                                <td>{{ station.getPriceGasoline98 }}</td>
+                                <td>{{ station.createdAt.format('Y-m-d h:i:s') }}</td>
+                                <td>{{ station.updatedAt.format('Y-m-d h:i:s') }}</td>
+                                <td>-</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        {% include 'admin/shared/_pagination.html.twig' with {
+            'total': (paginator.count / page.limit)|round(0, 'ceil'),
+            'current': page.page,
+            'url': path('admin_station_list') ~ '?page=',
+            'nearbyPagesLimit': 4
+        } %}
+
+        {% else %}
+
+            <p>No records found</p>
+
+        {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}

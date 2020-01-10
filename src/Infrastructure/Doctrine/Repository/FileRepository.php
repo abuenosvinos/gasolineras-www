@@ -3,7 +3,9 @@
 namespace App\Infrastructure\Doctrine\Repository;
 
 use App\Domain\Entity\File;
+use App\Shared\Domain\ValueObject\Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,26 +21,20 @@ class FileRepository extends ServiceEntityRepository
         parent::__construct($registry, File::class);
     }
 
-    /**
-     * @return File[] Returns an array of File objects
-     */
-    public function findAllWithTotalStations()
+    public function findAllWithTotalStations(Page $page)
     {
-        $list = $this->createQueryBuilder('f')
+        $q = $this->createQueryBuilder('f')
             ->leftJoin('f.stations', 's')
             ->addSelect('COUNT(f.id)')
             ->addGroupBy('f.id')
-            ->getQuery()
-            ->getResult()
         ;
 
-        $newList = [];
-        foreach ($list as $item) {
-            $newItem = $item[0];
-            $newItem->setCount($item[1]);
-            $newList[] = $newItem;
-        }
-        return $newList;
+        $paginator = new Paginator($q);
+        $paginator->getQuery()
+            ->setFirstResult($page->limit() * ($page->page() - 1))
+            ->setMaxResults($page->limit());
+
+        return $paginator;
     }
 
     public function findActiveFile()

@@ -6,24 +6,22 @@ use App\Application\Command\DeleteFileCommand;
 use App\Application\Query\FindFileByIdQuery;
 use App\Application\Query\FindAllStationQuery;
 use App\Framework\Controller\BaseController;
+use App\Shared\Domain\ValueObject\Page;
+use Symfony\Component\HttpFoundation\Request;
 
-class UserController extends BaseController
+class StationController extends BaseController
 {
-    public function profile()
+    public function list(Request $request)
     {
-        $list = $this->ask(new FindAllStationQuery());
+        $page = new Page(
+            $request->query->get('page', 1),
+            10
+        );
+        $list = $this->ask(new FindAllStationQuery($page));
 
-        return $this->render('admin/file.list.html.twig', array(
-            'list' => $list
-        ));
-    }
-
-    public function list()
-    {
-        $list = $this->ask(new FindAllStationQuery());
-
-        return $this->render('admin/file.list.html.twig', array(
-            'list' => $list
+        return $this->render('admin/station.list.html.twig', array(
+            'page' => $page,
+            'paginator' => $list
         ));
     }
 

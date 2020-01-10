@@ -16,6 +16,8 @@ class AdminController extends BaseController
 
     public function bridge()
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+
         return $this->render('admin/bridge.html.twig', [
             'num_stations_active' => 66,
             'users' => 77

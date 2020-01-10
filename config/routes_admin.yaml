@@ -3,6 +3,10 @@ home:
     path: /
     controller: App\UI\Controller\Admin\AdminController::index
 
+profile:
+    path: /profile
+    controller: App\UI\Controller\Admin\UserController::profile
+
 bridge:
     path: /bridge
     controller: App\UI\Controller\Admin\AdminController::bridge
@@ -11,13 +15,13 @@ file_list:
     path: /file/list
     controller: App\UI\Controller\Admin\FileController::list
 
-file_view:
-    path: /file/view/{id}
-    controller: App\UI\Controller\Admin\FileController::view
-
 file_delete:
     path: /file/delete/{id}
     controller: App\UI\Controller\Admin\FileController::delete
+
+station_list:
+    path: /station/list
+    controller: App\UI\Controller\Admin\StationController::list
 
 user_list:
     path: /user/list

@@ -3,7 +3,9 @@
 namespace App\Infrastructure\Doctrine\Repository;
 
 use App\Domain\Entity\Station;
+use App\Shared\Domain\ValueObject\Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -18,6 +20,19 @@ class StationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Station::class);
     }
+
+    public function getAll(Page $page)
+    {
+        $q = $this->createQueryBuilder('s');
+
+        $paginator = new Paginator($q);
+        $paginator->getQuery()
+            ->setFirstResult($page->limit() * ($page->page() - 1))
+            ->setMaxResults($page->limit());
+
+        return $paginator;
+    }
+
 
     /**
      * @return Station[] Returns an array of Station objects
@@ -67,6 +82,7 @@ class StationRepository extends ServiceEntityRepository
             ->andWhere('s.lng = :lng')
             ->setParameter('lat', $lat)
             ->setParameter('lng', $lng)
+            ->setMaxResults(1)
         ;
 
         return $q->getQuery()->getOneOrNullResult();

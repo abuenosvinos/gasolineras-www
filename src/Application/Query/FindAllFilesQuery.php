@@ -7,7 +7,7 @@ namespace App\Application\Query;
 use App\Shared\Domain\Bus\Query\Query;
 use App\Shared\Domain\ValueObject\Page;
 
-class FindAllStationQuery extends Query
+class FindAllFilesQuery extends Query
 {
     private $page;
 

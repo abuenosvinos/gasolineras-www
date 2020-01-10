@@ -1,0 +1,75 @@
+{% if total > 1 %}
+    <div class="row">
+        <div class="col-sm-12 col-md-5">
+            <div class="dataTables_info" role="status" aria-live="polite">Showing {{ page.first }} to {{ min(paginator.count, page.last) }} of {{ paginator.count }} entries</div>
+        </div>
+        <div class="col-sm-12 col-md-7">
+            <div class="dataTables_paginate paging_simple_numbers">
+                <ul class="pagination">
+                    <li class="paginate_button page-item previous {% if current == 1 %}disabled{% endif %}">
+                        <a href="{{ (url ~ (current - 1))|e }}" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+                    </li>
+                    {% for i in 1..total %}
+                        {% if 0 == (current - nearbyPagesLimit) - loop.index %}
+                            <li class="paginate_button page-item">
+                                <a href="{{ (url ~ 1)|e }}" class="page-link">1</a>
+                            </li>
+                            {% if 1 != loop.index %}
+                                <li class="paginate_button page-item"><span class="page-link">…</span></li>
+                            {% endif %}
+                        {% elseif 0 == (current + nearbyPagesLimit) - loop.index  and (current + nearbyPagesLimit) < total %}
+                            <li class="paginate_button page-item"><span class="page-link">…</span></li>
+                        {% elseif 0 < (current - nearbyPagesLimit) - loop.index %}
+                        {% elseif 0 > (current + nearbyPagesLimit) - loop.index %}
+                        {% else %}
+                            <li class="paginate_button page-item {{ current == loop.index ? 'active' }}">
+                                {% if current == loop.index  %}
+                                    <span class="page-link">{{ loop.index }}</span>
+                                {% else %}
+                                    <a href="{{ url ~ loop.index }}" class="page-link">{{ loop.index }}</a>
+                                {% endif %}
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if current != total  and (current + nearbyPagesLimit) < total %}
+                        <li class="paginate_button page-item"><a href="{{ (url ~ total)|e }}" class="page-link">{{ total }}</a></li>
+                    {% endif %}
+                    <li class="paginate_button page-item next {% if current == total %}disabled{% endif %}">
+                        <a href="{{ url ~ (current + 1) }}" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                    </li>
+
+                    {#
+                    <li class="paginate_button page-item active">
+                        <a href="{{ url }}?page={{ page.next }}" data-dt-idx="1" tabindex="0" class="page-link">1</a>
+                    </li>
+                    <li class="paginate_button page-item">
+                        <a href="#" data-dt-idx="2" tabindex="0" class="page-link">2</a>
+                    </li>
+                    <li class="paginate_button page-item">
+                        <a href="#" data-dt-idx="3" tabindex="0" class="page-link">3</a>
+                    </li>
+                    <li class="paginate_button page-item">
+                        <a href="#" data-dt-idx="4" tabindex="0" class="page-link">4</a>
+                    </li>
+                    <li class="paginate_button page-item">
+                        <a href="#" data-dt-idx="5" tabindex="0" class="page-link">5</a>
+                    </li>
+                    <li class="paginate_button page-item">
+                        <a href="#" data-dt-idx="6" tabindex="0" class="page-link">6</a>
+                    </li>
+                    <li class="paginate_button page-item next">
+                        <a href="#" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+                    </li>
+#}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+{% macro pagination(total, current, url, nearbyPagesLimit = 4) %}
+    {% if total > 1 %}
+        <ul class="pagination">
+        </ul>
+    {% endif %}
+{% endmacro %}
