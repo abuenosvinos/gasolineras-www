@@ -12,7 +12,7 @@ class ProcessFileCommand extends Command
 
     public function __construct(string $id = null)
     {
-        $this->id      = $id;
+        $this->id = $id;
     }
 
     public function id(): string

@@ -34,8 +34,9 @@ class ProcessFileCommandHandler implements CommandHandler
 
     public function __invoke(ProcessFileCommand $command)
     {
+        $id = $command->id();
         if (isset($id)) {
-            $file = $this->fileRepository->find($command->id());
+            $file = $this->fileRepository->find($id);
             if (!$file) {
                 //$io->error('File not found: ' . $id);
                 return;
