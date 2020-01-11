@@ -17,6 +17,7 @@
                             <th>ID</th>
                             <th>Name</th>
                             <th>Filename</th>
+                            <th>Num processed</th>
                             <th>Num stations</th>
                             <th>Options</th>
                         </tr>
@@ -28,8 +29,9 @@
                             <tr>
                                 <td>{{ file.getId }}</td>
                                 <td>{{ file.getName }}</td>
-                                <td>{{ count }}</td>
                                 <td>{{ file.getFile }}</td>
+                                <td>{{ file.getNumProcessed }}</td>
+                                <td>{{ count }}</td>
                                 <td><a href="{{ path('admin_station_list',{'id_file':file.getId}) }}">Ver</a>{% if not file.getActive() %} - <a href="{{ path('admin_file_delete',{'id':file.getId}) }}">Borrar</a>{% endif %}</td>
                             </tr>
                         {% endfor %}
