@@ -10,8 +10,6 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
  */
 class Price
 {
-    use TimestampableEntity;
-
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -54,6 +52,12 @@ class Price
      * @ORM\Column(type="float", nullable=true)
      */
     private $price_liquefied_petroleum_gas;
+
+    /**
+     * @var \DateTime
+     * @ORM\Column(type="date")
+     */
+    protected $date;
 
     public function getId(): ?int
     {
@@ -142,5 +146,17 @@ class Price
         $this->price_liquefied_petroleum_gas = $price_liquefied_petroleum_gas;
 
         return $this;
+    }
+
+    public function setDate(\DateTime $date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
     }
 }

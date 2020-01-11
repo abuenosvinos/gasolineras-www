@@ -13,6 +13,7 @@ use App\Infrastructure\Doctrine\Repository\PriceRepository;
 use App\Infrastructure\Doctrine\Repository\StationRepository;
 use App\Shared\Domain\Bus\Command\CommandHandler;
 use App\Shared\Domain\Bus\Event\EventBus;
+use DateTime;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -89,6 +90,7 @@ class ProcessFileCommandHandler implements CommandHandler
             $price->setPriceNewDieselA($this->formatFloat($item['M']));
             $price->setPriceGasoline98($this->formatFloat($item['Q']));
             $price->setPriceLiquefiedPetroleumGas($this->formatFloat($item['T']));
+            $price->setDate(DateTime::createFromFormat('d/m/Y H:i', $file->getName()));
 
             if (!$this->isValidPrice($price)) {
                 continue;
