@@ -1,4 +1,6 @@
 {
+    "name": "abuenosvinos/gasolineras-www",
+    "description": "Este proyecto tiene como objetivo la práctica de diversos componentes de software como el framework Symfony o Docker.",
     "type": "project",
     "license": "proprietary",
     "require": {
@@ -6,7 +8,7 @@
         "ext-ctype": "*",
         "ext-curl": "*",
         "ext-iconv": "*",
-        "escapestudios/symfony2-coding-standard": "3.8.1",
+        "escapestudios/symfony2-coding-standard": "^3.8",
         "phpoffice/phpspreadsheet": "^1.7",
         "ramsey/uuid": "^3.9",
         "stof/doctrine-extensions-bundle": "^1.3",
