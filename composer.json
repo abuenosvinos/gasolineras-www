@@ -10,11 +10,11 @@
         "ext-iconv": "*",
         "escapestudios/symfony2-coding-standard": "^3.8",
         "phpoffice/phpspreadsheet": "^1.7",
-        "ramsey/uuid": "^3.9",
+        "ramsey/uuid": "^4",
         "stof/doctrine-extensions-bundle": "^1.3",
         "symfony/apache-pack": "^1.0",
-        "symfony/console": "4.3.*",
-        "symfony/dotenv": "4.3.*",
+        "symfony/console": "4.4.*",
+        "symfony/dotenv": "4.4.*",
         "symfony/flex": "^1.4",
         "symfony/form": "4.4.*",
         "symfony/framework-bundle": "4.4.*",
@@ -27,8 +27,8 @@
         "symfony/twig-bundle": "4.4.*",
         "symfony/validator": "4.4.*",
         "symfony/webpack-encore-bundle": "^1.6",
-        "symfony/yaml": "4.3.*",
-      "ext-json": "*"
+        "symfony/yaml": "4.4.*",
+        "ext-json": "*"
     },
     "require-dev": {
         "symfony/maker-bundle": "^1.11",
@@ -36,15 +36,18 @@
         "symfony/profiler-pack": "^1.0",
         "symfony/var-dumper": "4.4.*",
         "symfony/web-server-bundle": "4.4.*",
-        "jakub-onderka/php-parallel-lint": "^1.0",
-        "jakub-onderka/php-console-highlighter": "^0.3",
+        "php-parallel-lint/php-parallel-lint": "^1.0",
+        "php-parallel-lint/php-console-highlighter": "^0.4",
         "squizlabs/php_codesniffer": "^3.5"
     },
     "config": {
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "sllh-composer-versions-check": {
+            "show-links": false
+        }
     },
     "autoload": {
         "psr-4": {

@@ -2,6 +2,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "brick/math": {
+        "version": "0.8.14"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -90,12 +93,6 @@
     "jakub-onderka/php-console-color": {
         "version": "v0.2"
     },
-    "jakub-onderka/php-console-highlighter": {
-        "version": "v0.3.2"
-    },
-    "jakub-onderka/php-parallel-lint": {
-        "version": "v1.0.0"
-    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
@@ -120,6 +117,12 @@
     "php": {
         "version": "7.2"
     },
+    "php-parallel-lint/php-console-highlighter": {
+        "version": "v0.3.2"
+    },
+    "php-parallel-lint/php-parallel-lint": {
+        "version": "v1.1.0"
+    },
     "phpoffice/phpspreadsheet": {
         "version": "1.7.0"
     },
@@ -133,6 +136,9 @@
         "version": "1.1.0"
     },
     "psr/simple-cache": {
+        "version": "1.0.1"
+    },
+    "ramsey/collection": {
         "version": "1.0.1"
     },
     "ramsey/uuid": {
