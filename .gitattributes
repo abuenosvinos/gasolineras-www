@@ -1,5 +1,7 @@
 # Exclude files from detection
 *.sql linguist-detectable=false
+*.css linguist-detectable=false
+*.js linguist-detectable=true
 
 # Source code
 *.css             text
