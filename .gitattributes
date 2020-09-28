@@ -2,6 +2,8 @@
 *.sql linguist-detectable=false
 *.css linguist-detectable=false
 *.js linguist-detectable=false
+*.twig linguist-detectable=false
+*.html linguist-detectable=false
 
 # Source code
 *.css             text
