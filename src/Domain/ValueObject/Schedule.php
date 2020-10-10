@@ -23,7 +23,11 @@ class Schedule
         foreach ($schedule as $item) {
             $item = explode(' ', trim($item));
 
-            $day_schedule = explode('-', str_replace(':', '', $item[0]));
+            // Si viene vacío asumimos que abre siempre (posible fallo integración con plataforma geoportalgasolineras)
+            $day_schedule = (isset($item[0]) && $item[0] != '') ? $item[0] : 'L-D';
+            $hour_schedule = (isset($item[1])) ? $item[1] : '24H';
+
+            $day_schedule = explode('-', str_replace(':', '', $day_schedule));
             $day_ini = $day_schedule[0];
             $day_fin = isset($day_schedule[1]) ? $day_schedule[1] : $day_schedule[0];
             $day_list = [];
@@ -39,7 +43,6 @@ class Schedule
                 }
             }
 
-            $hour_schedule = $item[1];
             if ($hour_schedule == '24H') {
                 $hour_ini = 0;
                 $hour_fin = 0;

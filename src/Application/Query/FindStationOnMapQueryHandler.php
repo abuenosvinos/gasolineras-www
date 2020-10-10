@@ -63,6 +63,12 @@ class FindStationOnMapQueryHandler extends Query
     }
 
     private function calculateMedia($data) {
+
+        // Protección por si viene vacío
+        if (count($data) == 0) {
+            $data[0] = 0;
+        }
+
         sort($data);
         $it_low = $it_med = $it_hig = intdiv(count($data), 3);
         if ((count($data) % 3) == 2) {
