@@ -116,7 +116,7 @@ class ProcessFileCommandHandler implements CommandHandler
             $station->setPriceNewDieselA($this->formatFloat($item['M']));
             $station->setPriceGasoline98($this->formatFloat($item['L']));
             $station->setPriceLiquefiedPetroleumGas($this->formatFloat($item['V']));
-            $station->setLabel($item['>']);
+            $station->setLabel($item['Z']);
             $station->setSaleType($item['AA']);
             $station->setRem($item['AB']);
             $station->setSchedule($item['AC']);
