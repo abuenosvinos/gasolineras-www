@@ -76,7 +76,7 @@ class ProcessFileCommandHandler implements CommandHandler
         // Inserto las estaciones del Excel
         $num_processed = $file->getNumProcessed();
         $offset = $numHeaderSheet + $num_processed;
-        $limit = 2500;
+        $limit = 500;
 
         $sheetData = array_splice($sheetData, $offset, $limit);
         foreach ($sheetData as $item) {
