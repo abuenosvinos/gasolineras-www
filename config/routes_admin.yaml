@@ -1,33 +1,33 @@
 
 home:
     path: /
-    controller: App\UI\Controller\Admin\AdminController::index
+    controller: App\UI\Http\Controller\Admin\AdminController::index
 
 profile:
     path: /profile
-    controller: App\UI\Controller\Admin\UserController::profile
+    controller: App\UI\Http\Controller\Admin\UserController::profile
 
 bridge:
     path: /bridge
-    controller: App\UI\Controller\Admin\AdminController::bridge
+    controller: App\UI\Http\Controller\Admin\AdminController::bridge
 
-file_list:
-    path: /file/list
-    controller: App\UI\Controller\Admin\FileController::list
+file_search:
+    path: /file/search
+    controller: App\UI\Http\Controller\Admin\FileController::search
 
 file_delete:
     path: /file/delete/{id}
-    controller: App\UI\Controller\Admin\FileController::delete
+    controller: App\UI\Http\Controller\Admin\FileController::delete
 
-station_list:
-    path: /station/list
-    controller: App\UI\Controller\Admin\StationController::list
+station_search:
+    path: /station/search
+    controller: App\UI\Http\Controller\Admin\StationController::search
 
 user_list:
     path: /user/list
-    controller: App\UI\Controller\Admin\UserController::list
+    controller: App\UI\Http\Controller\Admin\UserController::list
 
 user_view:
     path: /user/view/{id}
-    controller: App\UI\Controller\Admin\UserController::view
+    controller: App\UI\Http\Controller\Admin\UserController::view
 

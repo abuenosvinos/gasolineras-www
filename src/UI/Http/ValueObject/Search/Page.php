@@ -2,15 +2,16 @@
 
 declare(strict_types = 1);
 
-namespace App\Shared\Domain\ValueObject;
+namespace App\UI\Http\ValueObject\Search;
+
+use Symfony\Component\HttpFoundation\Request;
 
 class Page
 {
     private $page = 1;
     private $limit = 10;
-    private $total = 0;
 
-    public function __construct($page, $limit)
+    public function __construct($page, $limit = 10)
     {
         $this->page = (int)$page;
         $this->limit = (int)$limit;
@@ -26,9 +27,9 @@ class Page
         return $this->limit;
     }
 
-    public function numPages(): int
+    public function offset(): int
     {
-        return ($this->total / $this->page);
+        return $this->limit * ($this->page - 1);
     }
 
     public function first() :int
@@ -39,5 +40,10 @@ class Page
     public function last() :int
     {
         return $this->limit + ($this->limit * ($this->page - 1));
+    }
+
+    static public function fromRequest(Request $request)
+    {
+        return new self($request->query->get('page', 1));
     }
 }

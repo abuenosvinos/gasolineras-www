@@ -1,20 +1,20 @@
 <?php
 
-namespace App\UI\Controller;
+namespace App\UI\Http\Controller;
 
-use App\Application\Command\GetDataCommand;
+use App\Application\Command\CleanHistoryCommand;
 use App\Framework\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Response;
 
-class BridgeCronDownloadExcelController extends BaseController
+class BridgeCronCleanHistoryController extends BaseController
 {
     public function index()
     {
         // Tenemos que aumentar las condiciones de la request
-        ini_set('memory_limit','10000M');
-        set_time_limit ( 4000 );
+        ini_set('memory_limit','3072M');
+        set_time_limit ( 1200 );
 
-        $this->dispatch(new GetDataCommand());
+        $this->dispatch(new CleanHistoryCommand());
 
         // return new Response(""), if you used NullOutput()
         return new Response('Proceso ejecutado');

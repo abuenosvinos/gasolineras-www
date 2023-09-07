@@ -1,27 +1,27 @@
 
 home:
     path: /
-    controller: App\UI\Controller\SearchController::map
+    controller: App\UI\Http\Controller\SearchController::map
 
 map:
     path: /map
-    controller: App\UI\Controller\SearchController::map
+    controller: App\UI\Http\Controller\SearchController::map
 
 search:
     path: /search
-    controller: App\UI\Controller\SearchController::search
+    controller: App\UI\Http\Controller\SearchController::search
 
 bridge_cron_download_excel:
     path: /bridge/cron/download/excel
-    controller: App\UI\Controller\BridgeCronDownloadExcelController::index
+    controller: App\UI\Http\Controller\BridgeCronDownloadExcelController::index
 
 bridge_cron_process_excel:
     path: /bridge/cron/process/excel
-    controller: App\UI\Controller\BridgeCronProcessExcelController::index
+    controller: App\UI\Http\Controller\BridgeCronProcessExcelController::index
 
 bridge_cron_clean_history:
     path: /bridge/cron/clean/history
-    controller: App\UI\Controller\BridgeCronCleanHistoryController::index
+    controller: App\UI\Http\Controller\BridgeCronCleanHistoryController::index
 
 routes_admin:
     resource: routes_admin.yaml

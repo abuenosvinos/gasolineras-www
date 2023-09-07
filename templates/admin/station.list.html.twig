@@ -1,6 +1,6 @@
 {% extends'admin/base.html.twig' %}
 
-{% block title_section %}List of stations{% endblock %}
+{% block title_section %}List of stations ({{ paginator.count }}){% endblock %}
 
 {% block css %}
     {{ parent() }}
@@ -14,20 +14,38 @@
         <div class="col-12">
 
             {% if paginator.count > 0 %}
+
+                {% set urlSearch %}{{ path('admin_station_search') }}{% endset %}
+
             <div class="card">
                 <div class="card-body table-responsive p-0">
                     <table class="table table-bordered table-hover dataTable">
                         <thead>
                         <tr>
-                            <th>Id</th>
-                            <th class="sorting">City</th>
+                            {% include 'admin/shared/_header_field.html.twig' with {
+                                'name': 'ID',
+                                'field': 'id'
+                            } %}
+                            {% include 'admin/shared/_header_field.html.twig' with {
+                                'name': 'City',
+                                'field': 'municipality'
+                            } %}
                             <th>Address</th>
                             <th>Lng</th>
                             <th>Lat</th>
                             <th>Label</th>
-                            <th>PriceGasoline95</th>
-                            <th>PriceDieselA</th>
-                            <th>PriceGasoline98</th>
+                            {% include 'admin/shared/_header_field.html.twig' with {
+                                'name': 'PriceGasoline95',
+                                'field': 'price_gasoline_95'
+                            } %}
+                            {% include 'admin/shared/_header_field.html.twig' with {
+                                'name': 'PriceDieselA',
+                                'field': 'price_diesel_a'
+                            } %}
+                            {% include 'admin/shared/_header_field.html.twig' with {
+                                'name': 'PriceGasoline98',
+                                'field': 'price_gasoline_98'
+                            } %}
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>Options</th>
@@ -56,9 +74,9 @@
             </div>
 
         {% include 'admin/shared/_pagination.html.twig' with {
-            'total': (paginator.count / page.limit)|round(0, 'ceil'),
-            'current': page.page,
-            'url': path('admin_station_list') ~ '?page=',
+            'total': (paginator.count / search.page.limit)|round(0, 'ceil'),
+            'current': search.page.page,
+            'url': path('admin_station_search') ~ '?page=',
             'nearbyPagesLimit': 4
         } %}
 

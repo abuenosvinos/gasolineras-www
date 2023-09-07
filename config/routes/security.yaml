@@ -1,28 +1,28 @@
 
 app_login_form:
     path: /login
-    controller: App\UI\Controller\Security\SecurityController::form
+    controller: App\UI\Http\Controller\Security\SecurityController::form
     methods:    GET
     defaults:
         action: login
 
 app_register_form:
     path: /register
-    controller: App\UI\Controller\Security\SecurityController::form
+    controller: App\UI\Http\Controller\Security\SecurityController::form
     methods:    GET
     defaults:
         action: register
 
 app_login_action:
     path: /login
-    controller: App\UI\Controller\Security\SecurityController::login
+    controller: App\UI\Http\Controller\Security\SecurityController::login
     methods:    POST
 
 app_register_action:
     path: /register
-    controller: App\UI\Controller\Security\SecurityController::register
+    controller: App\UI\Http\Controller\Security\SecurityController::register
     methods:    POST
 
 app_logout:
     path: /logout
-    controller: App\UI\Controller\Security\SecurityController::logout
+    controller: App\UI\Http\Controller\Security\SecurityController::logout

@@ -3,6 +3,8 @@
 namespace App\Infrastructure\Doctrine\Repository;
 
 use App\Domain\Entity\Station;
+use App\Infrastructure\Doctrine\Criteria\DoctrineSelectable;
+use App\Shared\Domain\Criteria\Criteria;
 use App\Shared\Domain\ValueObject\Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -16,9 +18,41 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class StationRepository extends ServiceEntityRepository
 {
+    use DoctrineRepository;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Station::class);
+    }
+
+    public function searchByCriteria(Criteria $criteria)
+    {
+        $criteria = $this->transformCriteria($criteria);
+
+        $q = $this->createQueryBuilder('s');
+        $q->addCriteria($criteria);
+
+        $paginator = new Paginator($q);
+        $paginator->getQuery();
+        /*
+            ->setFirstResult(1)
+            ->setMaxResults(6);
+*/
+        return $paginator;
+
+        /*
+        $criteria = $this->transformCriteria($criteria);
+
+        $adapter = new DoctrineSelectable($this, $criteria); // An object repository implements Selectable
+
+        $paginator = new Paginator($adapter);
+        $paginator->getQuery()
+            ->setFirstResult(1)
+            ->setMaxResults(6);
+
+        return $paginator;
+        //return $this->matching($criteria);
+        */
     }
 
     public function getAll(Page $page)

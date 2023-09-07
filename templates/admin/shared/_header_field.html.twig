@@ -1,0 +1,5 @@
+{% set order_type %}{% if field == search.order.order and search.order.type == 'asc' %}desc{% else %}asc{% endif %}{% endset %}
+{% set sorting %}{% if field != search.order.order %}sorting{% elseif search.order.type == 'desc' %}sorting_desc{% else %}sorting_asc{% endif %}{% endset %}
+<th class="{{ sorting }}">
+    <a href="{{ urlSearch }}?order_by={{ field }}&order_type={{ order_type }}">{{ name }}</a>
+</th>

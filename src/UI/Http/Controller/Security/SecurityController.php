@@ -1,9 +1,9 @@
 <?php
 
-namespace App\UI\Controller\Security;
+namespace App\UI\Http\Controller\Security;
 
 use App\Domain\Entity\User;
-use App\UI\Form\RegistrationFormType;
+use App\UI\Http\Form\RegistrationFormType;
 use App\Framework\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

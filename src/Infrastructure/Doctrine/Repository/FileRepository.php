@@ -3,7 +3,7 @@
 namespace App\Infrastructure\Doctrine\Repository;
 
 use App\Domain\Entity\File;
-use App\Shared\Domain\ValueObject\Page;
+use App\Shared\Domain\Criteria\Criteria;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -16,23 +16,25 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class FileRepository extends ServiceEntityRepository
 {
+    use DoctrineRepository;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, File::class);
     }
 
-    public function findAllWithTotalStations(Page $page)
+    public function searchFilesWithTotalStations(Criteria $criteria)
     {
+        $criteria = $this->transformCriteria($criteria);
+
         $q = $this->createQueryBuilder('f')
             ->leftJoin('f.stations', 's')
             ->addSelect('COUNT(f.id)')
             ->addGroupBy('f.id')
         ;
+        $q->addCriteria($criteria);
 
         $paginator = new Paginator($q);
-        $paginator->getQuery()
-            ->setFirstResult($page->limit() * ($page->page() - 1))
-            ->setMaxResults($page->limit());
 
         return $paginator;
     }

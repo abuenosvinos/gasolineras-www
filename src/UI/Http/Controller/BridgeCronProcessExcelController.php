@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UI\Controller;
+namespace App\UI\Http\Controller;
 
 use App\Application\Command\ProcessFileCommand;
 use App\Framework\Controller\BaseController;

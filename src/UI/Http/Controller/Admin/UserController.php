@@ -1,17 +1,17 @@
 <?php
 
-namespace App\UI\Controller\Admin;
+namespace App\UI\Http\Controller\Admin;
 
 use App\Application\Command\DeleteFileCommand;
 use App\Application\Query\FindFileByIdQuery;
-use App\Application\Query\FindAllStationQuery;
+use App\Application\Query\SearchStationQuery;
 use App\Framework\Controller\BaseController;
 
 class UserController extends BaseController
 {
     public function profile()
     {
-        $list = $this->ask(new FindAllStationQuery());
+        $list = $this->ask(new SearchStationQuery());
 
         return $this->render('admin/file.list.html.twig', array(
             'list' => $list
@@ -20,7 +20,7 @@ class UserController extends BaseController
 
     public function list()
     {
-        $list = $this->ask(new FindAllStationQuery());
+        $list = $this->ask(new SearchStationQuery());
 
         return $this->render('admin/file.list.html.twig', array(
             'list' => $list
@@ -43,6 +43,6 @@ class UserController extends BaseController
 
         $this->dispatch(new DeleteFileCommand($id));
 
-        return $this->redirectToRoute('admin_file_list');
+        return $this->redirectToRoute('admin_file_search');
     }
 }

@@ -1,6 +1,12 @@
 {% extends'admin/base.html.twig' %}
 
-{% block title_section %}List of files{% endblock %}
+{% block title_section %}List of files ({{ paginator.count }}){% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css">
+{% endblock %}
 
 {% block body %}
 
@@ -9,15 +15,29 @@
 
             {% if paginator.count > 0 %}
 
+                {% set urlSearch %}{{ path('admin_file_search') }}{% endset %}
+
             <div class="card">
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover">
+                    <table class="table table-bordered table-hover dataTable">
                         <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Filename</th>
-                            <th>Num processed</th>
+                            {% include 'admin/shared/_header_field.html.twig' with {
+                                'name': 'ID',
+                                'field': 'id'
+                            } %}
+                            {% include 'admin/shared/_header_field.html.twig' with {
+                                'name': 'Name',
+                                'field': 'name'
+                            } %}
+                            {% include 'admin/shared/_header_field.html.twig' with {
+                                'name': 'Filename',
+                                'field': 'file'
+                            } %}
+                            {% include 'admin/shared/_header_field.html.twig' with {
+                                'name': 'Num processed',
+                                'field': 'num_processed'
+                            } %}
                             <th>Num stations</th>
                             <th>Options</th>
                         </tr>
@@ -32,7 +52,7 @@
                                 <td>{{ file.getFile }}</td>
                                 <td>{{ file.getNumProcessed }}</td>
                                 <td>{{ count }}</td>
-                                <td><a href="{{ path('admin_station_list',{'id_file':file.getId}) }}">Ver</a>{% if not file.getActive() %} - <a href="{{ path('admin_file_delete',{'id':file.getId}) }}">Borrar</a>{% endif %}</td>
+                                <td><a href="{{ path('admin_station_search',{'id_file':file.getId}) }}">Ver</a>{% if not file.getActive() %} - <a href="{{ path('admin_file_delete',{'id':file.getId}) }}">Borrar</a>{% endif %}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -41,9 +61,9 @@
             </div>
 
             {% include 'admin/shared/_pagination.html.twig' with {
-                'total': (paginator.count / page.limit)|round(0, 'ceil'),
-                'current': page.page,
-                'url': path('admin_file_list') ~ '?page=',
+                'total': (paginator.count / search.page.limit)|round(0, 'ceil'),
+                'current': search.page.page,
+                'url': urlSearch ~ '?page=',
                 'nearbyPagesLimit': 4
             } %}
 

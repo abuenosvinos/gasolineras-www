@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Application\Query;
-
 
 use App\Domain\ValueObject\Schedule;
 use App\Infrastructure\Doctrine\Repository\StationRepository;

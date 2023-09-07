@@ -1,6 +1,6 @@
 <?php
 
-namespace App\UI\Controller;
+namespace App\UI\Http\Controller;
 
 use App\Application\Query\FindActiveFileQuery;
 use App\Application\Query\FindStationOnMapQuery;
@@ -48,7 +48,7 @@ class SearchController extends BaseController
             'lat' => $lat,
             'lng' => $lng,
             'gasSelected' => $gasSelected,
-            'last_update' => $file->getName(),
+            'last_update' => $file?->getName(),
             'iAmAndroid' => $iAmAndroid,
             'iAmSecure' => $iAmSecure
         ]);

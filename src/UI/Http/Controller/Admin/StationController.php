@@ -1,26 +1,24 @@
 <?php
 
-namespace App\UI\Controller\Admin;
+namespace App\UI\Http\Controller\Admin;
 
 use App\Application\Command\DeleteFileCommand;
 use App\Application\Query\FindFileByIdQuery;
-use App\Application\Query\FindAllStationQuery;
+use App\Application\Query\SearchStationQuery;
 use App\Framework\Controller\BaseController;
-use App\Shared\Domain\ValueObject\Page;
+use App\UI\Http\ValueObject\Search\Search;
 use Symfony\Component\HttpFoundation\Request;
 
 class StationController extends BaseController
 {
-    public function list(Request $request)
+    public function search(Request $request)
     {
-        $page = new Page(
-            $request->query->get('page', 1),
-            10
-        );
-        $list = $this->ask(new FindAllStationQuery($page));
+        $search = Search::fromRequest($request);
+
+        $list = $this->ask(new SearchStationQuery($search));
 
         return $this->render('admin/station.list.html.twig', array(
-            'page' => $page,
+            'search' => $search,
             'paginator' => $list
         ));
     }
@@ -41,6 +39,6 @@ class StationController extends BaseController
 
         $this->dispatch(new DeleteFileCommand($id));
 
-        return $this->redirectToRoute('admin_file_list');
+        return $this->redirectToRoute('admin_file_search');
     }
 }
